@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vírus na Mente - Curso Exclusivo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0f172a;
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #9333ea 100%);
+        }
+        
+        .card-glass {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        
+        .menu-item {
+            transition: all 0.3s ease;
+        }
+        
+        .menu-item:hover {
+            transform: translateX(10px);
+        }
+        
+        .phrase-card {
+            transition: all 0.3s ease;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+        }
+        
+        .phrase-card:hover {
+            transform: scale(1.02);
+            background: rgba(79, 70, 229, 0.2);
+            border-color: rgba(124, 58, 237, 0.7);
+        }
+        
+        .formula-card {
+            background: linear-gradient(145deg, rgba(79, 70, 229, 0.2) 0%, rgba(124, 58, 237, 0.2) 100%);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+        }
+        
+        .slide-in {
+            animation: slideIn 0.5s ease-out forwards;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-in forwards;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .login-container {
+            background: linear-gradient(145deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.9) 100%);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        
+        .input-field {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(124, 58, 237, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .input-field:focus {
+            border-color: #7c3aed;
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.3);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(124, 58, 237, 0.5);
+        }
+        
+        .sidebar {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-out;
+        }
+        
+        .sidebar.open {
+            transform: translateX(0);
+        }
+        
+        .overlay {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Login Screen -->
+    <div id="loginScreen" class="fixed inset-0 flex items-center justify-center z-50 gradient-bg">
+        <div class="login-container p-8 rounded-xl w-full max-w-md relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-purple-900/20 to-blue-900/20"></div>
+            <div class="relative z-10">
+                <h1 class="text-3xl font-bold text-center mb-2 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400">Vírus na Mente</h1>
+                <p class="text-center text-purple-200 mb-8">Acesso Exclusivo</p>
+                
+                <form id="loginForm" class="space-y-6">
+                    <div>
+                        <label for="username" class="block text-sm font-medium text-purple-200 mb-1">ID de Acesso</label>
+                        <input type="text" id="username" class="w-full px-4 py-3 rounded-lg input-field text-white focus:outline-none" placeholder="Digite seu ID">
+                    </div>
+                    
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-purple-200 mb-1">Senha</label>
+                        <input type="password" id="password" class="w-full px-4 py-3 rounded-lg input-field text-white focus:outline-none" placeholder="Digite sua senha">
+                    </div>
+                    
+                    <button type="submit" class="w-full py-3 px-4 rounded-lg btn-primary text-white font-semibold focus:outline-none">
+                        Acessar Curso
+                    </button>
+                </form>
+                
+                <div id="loginError" class="mt-4 text-center text-red-400 hidden">
+                    ID ou senha incorretos. Tente novamente.
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Content (hidden initially) -->
+    <div id="mainContent" class="hidden">
+        <!-- Header -->
+        <header class="fixed top-0 left-0 right-0 bg-gradient-to-r from-blue-900/80 to-purple-900/80 backdrop-blur-md z-40 border-b border-purple-900/30">
+            <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+                <h1 class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-300 to-purple-300">VÍRUS NA MENTE</h1>
+                <button id="menuToggle" class="text-white focus:outline-none">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </header>
+        
+        <!-- Sidebar Menu -->
+        <div id="sidebarOverlay" class="overlay fixed inset-0 bg-black/70 z-40"></div>
+        <div id="sidebarMenu" class="sidebar fixed top-0 right-0 w-64 h-full bg-slate-900/95 backdrop-blur-lg z-50 p-6 border-l border-purple-900/30">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-300 to-purple-300">MENU</h2>
+                <button id="closeMenu" class="text-purple-300 focus:outline-none">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <nav class="space-y-4">
+                <a href="#" class="block menu-item p-3 rounded-lg hover:bg-purple-900/30 text-white" data-page="home">
+                    <i class="fas fa-home mr-3 text-purple-400"></i> Menu Inicial
+                </a>
+                <a href="#" class="block menu-item p-3 rounded-lg hover:bg-purple-900/30 text-white" data-page="lessons">
+                    <i class="fas fa-play-circle mr-3 text-blue-400"></i> Aulas
+                </a>
+                <a href="#" class="block menu-item p-3 rounded-lg hover:bg-purple-900/30 text-white" data-page="phrases">
+                    <i class="fas fa-quote-right mr-3 text-pink-400"></i> Frases Virais
+                </a>
+                <a href="#" class="block menu-item p-3 rounded-lg hover:bg-purple-900/30 text-white" data-page="formulas">
+                    <i class="fas fa-lock mr-3 text-yellow-400"></i> Fórmula Secreta
+                </a>
+            </nav>
+            
+            <div class="absolute bottom-6 left-6 right-6">
+                <button id="logoutBtn" class="w-full py-2 px-4 rounded-lg bg-slate-800 hover:bg-slate-700 text-purple-300 font-medium border border-purple-900/50 transition">
+                    <i class="fas fa-sign-out-alt mr-2"></i> Sair
+                </button>
+            </div>
+        </div>
+        
+        <!-- Main Pages -->
+        <main class="pt-16 pb-20 min-h-screen">
+            <!-- Home Page -->
+            <div id="homePage" class="page active px-4 py-8">
+                <div class="max-w-4xl mx-auto text-center mt-10 fade-in">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-300 to-purple-300">
+                        BEM-VINDO(A) AO <br>VÍRUS NA MENTE
+                    </h1>
+                    <p class="text-xl text-purple-200 mb-10">
+                        Clique no menu no canto superior direito para acessar seu produto
+                    </p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
+                        <div class="card-glass p-6 rounded-xl hover:shadow-lg transition">
+                            <div class="text-blue-400 text-4xl mb-4">
+                                <i class="fas fa-play-circle"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-2">Aulas Exclusivas</h3>
+                            <p class="text-purple-200">Conteúdo poderoso para dominar a mente do seu público</p>
+                        </div>
+                        
+                        <div class="card-glass p-6 rounded-xl hover:shadow-lg transition">
+                            <div class="text-purple-400 text-4xl mb-4">
+                                <i class="fas fa-quote-right"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-2">Frases Virais</h3>
+                            <p class="text-purple-200">100 frases prontas para aplicar e ver os resultados</p>
+                        </div>
+                        
+                        <div class="card-glass p-6 rounded-xl hover:shadow-lg transition">
+                            <div class="text-pink-400 text-4xl mb-4">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-2">Fórmulas Secretas</h3>
+                            <p class="text-purple-200">Estruturas comprovadas para criar conteúdo irresistível</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Lessons Page -->
+            <div id="lessonsPage" class="page hidden px-4 py-8">
+                <div class="max-w-4xl mx-auto">
+                    <h1 class="text-3xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-300 to-purple-300">AULAS EXCLUSIVAS</h1>
+                    
+                    <div id="lesson1" class="lesson-section slide-in mb-12">
+                        <h2 class="text-2xl font-semibold mb-4 text-blue-300">AULA 1</h2>
+                        <div class="video-container rounded-xl overflow-hidden mb-6">
+                            <iframe src="https://www.youtube.com/embed/CZKJSRs_9eM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <button class="next-lesson btn-primary px-6 py-2 rounded-lg text-white font-medium" data-next="lesson2">
+                            Próxima Aula <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    
+                    <div id="lesson2" class="lesson-section hidden mb-12">
+                        <h2 class="text-2xl font-semibold mb-4 text-purple-300">AULA 2</h2>
+                        <div class="video-container rounded-xl overflow-hidden mb-6">
+                            <iframe src="https://www.youtube.com/embed/Csqyhfl1Z3A" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <button class="next-lesson btn-primary px-6 py-2 rounded-lg text-white font-medium" data-next="lesson3">
+                            Próxima Aula <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    
+                    <div id="lesson3" class="lesson-section hidden mb-12">
+                        <h2 class="text-2xl font-semibold mb-4 text-pink-300">AULA 3</h2>
+                        <div class="video-container rounded-xl overflow-hidden mb-6">
+                            <iframe src="https://www.youtube.com/embed/Aa258ckxo0w" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div class="text-center mt-6">
+                            <button class="btn-primary px-6 py-2 rounded-lg text-white font-medium" id="backToLessons">
+                                <i class="fas fa-arrow-left mr-2"></i> Voltar para Aula 1
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Phrases Page -->
+            <div id="phrasesPage" class="page hidden px-4 py-8">
+                <div class="max-w-6xl mx-auto">
+                    <h1 class="text-3xl font-bold mb-2 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-300 to-purple-300">100 VÍRUS MENTAIS</h1>
+                    <p class="text-xl text-purple-300 text-center mb-10">FRASES PRONTAS PARA APLICAR</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <!-- Phrases will be inserted here by JavaScript -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Formulas Page -->
+            <div id="formulasPage" class="page hidden px-4 py-8">
+                <div class="max-w-4xl mx-auto">
+                    <h1 class="text-3xl font-bold mb-2 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-300 to-purple-300">🧠 FÓRMULAS SECRETAS PRONTAS</h1>
+                    <p class="text-lg text-purple-300 text-center mb-10">Use essas estruturas e apenas mude as palavras para o seu nicho</p>
+                    
+                    <div class="space-y-8">
+                        <div class="formula-card p-6 rounded-xl">
+                            <h3 class="text-xl font-semibold mb-3 text-blue-300">Fórmula 1 – Choque + Benefício</h3>
+                            <p class="text-purple-200 italic">"O que você vai ver agora pode mudar tudo. Aprenda [benefício direto] em [tempo curto]. Clique e descubra o segredo que [grandes nomes] usam em silêncio."</p>
+                        </div>
+                        
+                        <div class="formula-card p-6 rounded-xl">
+                            <h3 class="text-xl font-semibold mb-3 text-purple-300">Fórmula 2 – Curiosidade + Ameaça</h3>
+                            <p class="text-purple-200 italic">"E se eu te mostrasse que [algo comum] está te impedindo de crescer? A maioria ignora isso — e paga o preço. Entenda como virar o jogo em minutos."</p>
+                        </div>
+                        
+                        <div class="formula-card p-6 rounded-xl">
+                            <h3 class="text-xl font-semibold mb-3 text-pink-300">Fórmula 3 – Inversão + Solução Imediata</h3>
+                            <p class="text-purple-200 italic">"O erro não está no que você faz, está em como você diz. Use essa frase e observe a diferença nas próximas 24h."</p>
+                        </div>
+                        
+                        <div class="formula-card p-6 rounded-xl">
+                            <h3 class="text-xl font-semibold mb-3 text-yellow-300">Fórmula 4 – Proibido + Transformador</h3>
+                            <p class="text-purple-200 italic">"Esse código foi chamado de perigoso por especialistas. Ele transforma frases comuns em armas de atenção. Você está pronto pra usar isso?"</p>
+                        </div>
+                        
+                        <div class="formula-card p-6 rounded-xl">
+                            <h3 class="text-xl font-semibold mb-3 text-green-300">Fórmula 5 – Autoridade + Resultado Rápido</h3>
+                            <p class="text-purple-200 italic">"Essa é a estrutura que os grandes players usam (e você nunca viu). Use por 1 dia e veja seus números subirem. Isso não é curso. É ferramenta de guerra."</p>
+                        </div>
+                        
+                        <div class="formula-card p-6 rounded-xl">
+                            <h3 class="text-xl font-semibold mb-3 text-red-300">Fórmula 6 – Gatilho Visual + Comando</h3>
+                            <p class="text-purple-200 italic">"Pare de rolar. Essa frase ativou milhares de mentes. Copie, cole, e veja o efeito em tempo real."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Particles Background -->
+        <div class="particles" id="particles-js"></div>
+    </div>
+
+    <script>
+        // Login Logic
+        const loginScreen = document.getElementById('loginScreen');
+        const mainContent = document.getElementById('mainContent');
+        const loginForm = document.getElementById('loginForm');
+        const loginError = document.getElementById('loginError');
+        const logoutBtn = document.getElementById('logoutBtn');
+        
+        const CORRECT_USERNAME = '19042006';
+        const CORRECT_PASSWORD = '20212006';
+        
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === CORRECT_USERNAME && password === CORRECT_PASSWORD) {
+                // Successful login
+                loginScreen.style.display = 'none';
+                mainContent.classList.remove('hidden');
+                
+                // Show home page
+                showPage('home');
+                
+                // Create particles
+                createParticles();
+            } else {
+                // Failed login
+                loginError.classList.remove('hidden');
+            }
+        });
+        
+        logoutBtn.addEventListener('click', function() {
+            mainContent.classList.add('hidden');
+            loginScreen.style.display = 'flex';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            loginError.classList.add('hidden');
+        });
+        
+        // Menu Logic
+        const menuToggle = document.getElementById('menuToggle');
+        const closeMenu = document.getElementById('closeMenu');
+        const sidebarMenu = document.getElementById('sidebarMenu');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        
+        menuToggle.addEventListener('click', function() {
+            sidebarMenu.classList.add('open');
+            sidebarOverlay.classList.add('active');
+        });
+        
+        closeMenu.addEventListener('click', function() {
+            sidebarMenu.classList.remove('open');
+            sidebarOverlay.classList.remove('active');
+        });
+        
+        sidebarOverlay.addEventListener('click', function() {
+            sidebarMenu.classList.remove('open');
+            sidebarOverlay.classList.remove('active');
+        });
+        
+        // Page Navigation
+        const menuItems = document.querySelectorAll('[data-page]');
+        
+        menuItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const pageId = this.getAttribute('data-page');
+                showPage(pageId);
+                
+                // Close menu
+                sidebarMenu.classList.remove('open');
+                sidebarOverlay.classList.remove('active');
+            });
+        });
+        
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+                page.classList.add('hidden');
+            });
+            
+            // Show selected page
+            const pageToShow = document.getElementById(`${pageId}Page`);
+            pageToShow.classList.remove('hidden');
+            pageToShow.classList.add('active');
+            
+            // If phrases page, load phrases
+            if (pageId === 'phrases') {
+                loadPhrases();
+            }
+        }
+        
+        // Lessons Navigation
+        const nextLessonButtons = document.querySelectorAll('.next-lesson');
+        const backToLessonsBtn = document.getElementById('backToLessons');
+        
+        nextLessonButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const nextLessonId = this.getAttribute('data-next');
+                
+                // Hide current lesson
+                this.closest('.lesson-section').classList.add('hidden');
+                
+                // Show next lesson
+                document.getElementById(nextLessonId).classList.remove('hidden');
+                document.getElementById(nextLessonId).classList.add('slide-in');
+                
+                // Scroll to top of next lesson
+                document.getElementById(nextLessonId).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+        
+        backToLessonsBtn.addEventListener('click', function() {
+            // Hide all lessons
+            document.querySelectorAll('.lesson-section').forEach(lesson => {
+                lesson.classList.add('hidden');
+            });
+            
+            // Show first lesson
+            document.getElementById('lesson1').classList.remove('hidden');
+            document.getElementById('lesson1').classList.add('slide-in');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // Load Phrases
+        function loadPhrases() {
+            const phrasesContainer = document.querySelector('#phrasesPage .grid');
+            phrasesContainer.innerHTML = '';
+            
+            const phrases = [
+                "Ninguém vai te contar isso, mas todo mundo usa.",
+                "Se você ignorar isso, vai continuar invisível.",
+                "Você só precisa de 7 segundos pra dominar a atenção.",
+                "Essa frase é mais poderosa que qualquer anúncio pago.",
+                "Pule se você quiser continuar no fracasso.",
+                "Quem entende isso, faz 6 dígitos em silêncio.",
+                "Não é marketing. É manipulação cerebral.",
+                "Seu concorrente vai te odiar por ver isso.",
+                "Essa fórmula foi usada pra ele vender 1 milhão em 30 dias.",
+                "Leia isso antes que apaguem.",
+                "Cuidado: isso implanta desejo em quem vê.",
+                "Pessoas comuns estão usando isso pra viralizar.",
+                "Não é sobre seguidores. É sobre controle mental.",
+                "Se essa frase te afetou, já funcionou.",
+                "Você não vai conseguir ignorar esse conteúdo.",
+                "É ilegal ensinar isso em cursos comuns.",
+                "Alerta: essa copy pode viciar quem lê.",
+                "100% das pessoas que viram isso reagiram.",
+                "Essa imagem + essa frase = explosão mental.",
+                "Sinta isso: você precisa do que ainda nem conhece.",
+                "Gatilho de autoridade? Isso aqui é dominação psíquica.",
+                "Só os frios conseguem usar essa técnica com calma.",
+                "Essa frase não é só marketing. É uma arma.",
+                "O algoritmo ama isso. E as pessoas também.",
+                "Essa é a frase que transforma views em vício.",
+                "O que eu estou prestes a te mostrar vai te transformar.",
+                "Se você ler isso até o final, sua vida nunca mais será a mesma.",
+                "O que você aprendeu até agora é mentira.",
+                "A verdade é que ninguém te ensina isso porque não querem.",
+                "Isso pode ser a última chance de mudar seu destino.",
+                "Você está a um clique de mudar tudo.",
+                "Está pronto para o maior segredo da sua vida?",
+                "Não pense. Apenas siga a instrução.",
+                "O segredo do sucesso está na sua próxima decisão.",
+                "E se eu te dissesse que você pode mudar seu futuro AGORA?",
+                "Isso aqui é para os corajosos. Só leia se for do tipo audacioso.",
+                "As melhores ideias nascem quando você se liberta do medo.",
+                "Sua primeira chance está aqui, não deixe escapar.",
+                "Se você não der o primeiro passo, nada muda.",
+                "As pessoas que agem agora são as que conquistam tudo.",
+                "O mundo é dos ousados. E você vai ser um deles.",
+                "Isso é só para quem quer ser grande.",
+                "Esse é o primeiro passo para você deixar de ser comum.",
+                "Não existe outra chance. Essa é a única.",
+                "Eu sei que você vai entender quando ler isso.",
+                "Prepare-se para transformar sua realidade.",
+                "Sucesso não é sorte. É estratégia. E eu vou te ensinar.",
+                "Não há nada mais poderoso do que a mente focada.",
+                "O segredo das mentes brilhantes está aqui, bem na sua frente.",
+                "Aqui está a fórmula que ninguém quer que você saiba.",
+                "Isso não é sobre dinheiro. É sobre o controle da sua vida.",
+                "O poder está na sua mão. Só precisa saber usar.",
+                "Você está prestes a descobrir o que separa os vencedores dos perdedores.",
+                "O que você sempre quis está mais perto do que imagina.",
+                "Prepare-se para desbloquear uma versão de você que você nunca imaginou.",
+                "Não é coincidência que você encontrou isso agora.",
+                "Os melhores não ficam esperando. Eles fazem acontecer.",
+                "Você pode ser aquilo que sempre sonhou. E agora é o momento de agir.",
+                "A mentalidade que você precisa para vencer é muito simples.",
+                "Você não precisa de mais tempo. Você precisa de mais ação.",
+                "Os resultados que você quer começam aqui.",
+                "O segredo do sucesso está na mentalidade, e agora você vai entender.",
+                "Esse é o tipo de ideia que vai te colocar à frente de todos.",
+                "Quando você entende isso, o mundo se abre para você.",
+                "Esse é o segredo que te falta para fazer o próximo grande salto.",
+                "Você está a um passo de ser grande. Não pare agora.",
+                "O momento de agir é agora, não espere por mais nada.",
+                "Cada segundo que você perde agora, é um segundo que você jamais terá de volta.",
+                "Não existe sucesso sem movimento. E o movimento começa agora.",
+                "Você vai olhar para trás e se perguntar por que demorou tanto para descobrir isso.",
+                "Esse é o segredo que vai te colocar no topo.",
+                "O que você está prestes a aprender vai te tornar imbatível.",
+                "É agora ou nunca. O futuro depende dessa decisão.",
+                "A chave do sucesso está ao seu alcance.",
+                "Toda grande jornada começa com um único passo. E esse passo é agora.",
+                "Você vai se arrepender se não agir agora. Não deixe passar essa chance.",
+                "O segredo para transformar sua vida está em um simples ajuste.",
+                "Sua jornada para o topo começa aqui, com um simples clique.",
+                "O sucesso não é sobre o quanto você sabe, mas sobre o que você faz com o que sabe.",
+                "Pare de se perguntar 'e se?'. Comece a perguntar 'por que não?'",
+                "O maior erro é não tentar. Agora é a sua chance.",
+                "Isso é só para os que não têm medo de mudar.",
+                "O medo de falhar é o maior inimigo do seu sucesso.",
+                "A ação é a única coisa que vai te tirar da mediocridade.",
+                "Quando você perceber isso, tudo o que você conhece vai mudar.",
+                "Você não precisa de mais conhecimento, precisa de mais atitude.",
+                "O caminho para o topo é simples: ação e foco.",
+                "Toda grande mudança começa com uma pequena decisão.",
+                "Sua vitória está mais próxima do que imagina. Basta dar o primeiro passo.",
+                "As coisas acontecem para quem faz acontecer.",
+                "As pessoas de sucesso sabem que, se não agirem, nada acontece.",
+                "Você está prestes a descobrir a técnica que vai acelerar sua vida.",
+                "Grandes coisas acontecem quando você sai da zona de conforto.",
+                "Não se preocupe com o que não deu certo. Se preocupe com o que você vai fazer agora.",
+                "Se você tem medo, isso significa que está na hora de agir.",
+                "Nada vai mudar se você continuar esperando.",
+                "Essa frase vai te dar o que você precisa para ter sucesso.",
+                "O que você vai aprender aqui vai ser o diferencial que você precisa.",
+                "Você não vai mais precisar de sorte, vai precisar apenas de ação.",
+                "Esse é o momento que vai mudar tudo."
+            ];
+            
+            phrases.forEach((phrase, index) => {
+                const phraseCard = document.createElement('div');
+                phraseCard.className = 'phrase-card p-4 rounded-lg';
+                phraseCard.innerHTML = `
+                    <div class="flex items-start">
+                        <span class="text-purple-400 font-bold mr-3">${index + 1}.</span>
+                        <p class="text-white">${phrase}</p>
+                    </div>
+                `;
+                phrasesContainer.appendChild(phraseCard);
+            });
+        }
+        
+        // Create Particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles-js');
+            particlesContainer.innerHTML = '';
+            
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random size between 1px and 3px
+                const size = Math.random() * 2 + 1;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // Random opacity
+                particle.style.opacity = Math.random() * 0.5 + 0.1;
+                
+                // Animation
+                const duration = Math.random() * 20 + 10;
+                particle.style.animation = `float ${duration}s infinite linear`;
+                
+                particlesContainer.appendChild(particle);
+            }
+            
+            // Add CSS for floating animation
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes float {
+                    0% {
+                        transform: translateY(0) translateX(0);
+                        opacity: ${Math.random() * 0.5 + 0.1};
+                    }
+                    50% {
+                        transform: translateY(${Math.random() * 100 - 50}px) translateX(${Math.random() * 100 - 50}px);
+                        opacity: ${Math.random() * 0.5 + 0.1};
+                    }
+                    100% {
+                        transform: translateY(0) translateX(0);
+                        opacity: ${Math.random() * 0.5 + 0.1};
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    </script>
+</body>
+</html>
